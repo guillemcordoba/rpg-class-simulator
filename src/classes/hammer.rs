@@ -64,8 +64,12 @@ impl AttackSkill for HammerSweep {
 
         self_damage_modifiers.insert(tick + 1, vec![Box::new(miss)]);
 
+        let counterattack = |d| d + 6;
+
         if first {
-            rival_damage_modifiers.insert(tick, vec![Box::new(|d| d + 6)]);
+            rival_damage_modifiers.insert(tick, vec![Box::new(counterattack)]);
+        } else {
+            rival_damage_modifiers.insert(tick + 1, vec![Box::new(counterattack)]);
         }
 
         damage

@@ -42,15 +42,15 @@ impl DefenseSkill for LeatherArmor {
     fn defend(
         &self,
         damage: usize,
-        tick: usize,
-        first: bool,
-        self_damage_modifiers: &mut DamageModifiers,
-        rival_damage_modifiers: &mut DamageModifiers,
+        _tick: usize,
+        _first: bool,
+        _self_damage_modifiers: &mut DamageModifiers,
+        _rival_damage_modifiers: &mut DamageModifiers,
     ) -> usize {
         let dice = roll(1, 6);
 
         if dice[0] == 6 {
-            let final_damage: isize = damage as isize - 8;
+            let final_damage: isize = damage as isize - 6;
             if final_damage > 0 {
                 final_damage as usize
             } else {

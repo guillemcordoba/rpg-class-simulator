@@ -4,7 +4,7 @@ pub trait Class {
     fn name(&self) -> String;
 
     fn initial_health(&self) -> usize {
-        30
+        40
     }
 
     fn choose_attack_skill(

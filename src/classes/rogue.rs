@@ -47,9 +47,9 @@ impl DefenseSkill for AssassinActitude {
         self_damage_modifiers: &mut DamageModifiers,
         rival_damage_modifiers: &mut DamageModifiers,
     ) -> usize {
-        let dice = roll(2, 6);
+        let dice = roll(1, 6);
 
-        if dice[0] + dice[1] > 7 {
+        if dice[0] > 4 {
             0
         } else {
             damage

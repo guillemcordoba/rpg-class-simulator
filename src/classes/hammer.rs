@@ -16,7 +16,7 @@ impl Class for HammerGuy {
         _self_health: usize,
         rival_health: usize,
     ) -> Box<dyn AttackSkill> {
-        if rival_health < 4 {
+        if rival_health < 9 {
             Box::new(HammerSweep)
         } else {
             self.basic_attack_skill()
@@ -64,7 +64,7 @@ impl AttackSkill for HammerSweep {
 
         self_damage_modifiers.insert(tick + 1, vec![Box::new(miss)]);
 
-        let counterattack = |d| d + 6;
+        let counterattack = |d| d + 4;
 
         if first {
             rival_damage_modifiers.insert(tick, vec![Box::new(counterattack)]);

@@ -7,10 +7,10 @@ pub trait AttackSkill {
     fn attack(
         &self,
         damage: usize,
-        tick: usize,
-        first: bool,
-        self_damage_modifiers: &mut DamageModifiers,
-        rival_damage_modifiers: &mut DamageModifiers,
+        _tick: usize,
+        _first: bool,
+        _self_damage_modifiers: &mut DamageModifiers,
+        _rival_damage_modifiers: &mut DamageModifiers,
     ) -> usize {
         damage
     }
@@ -26,10 +26,10 @@ pub trait DefenseSkill {
     fn defend(
         &self,
         damage: usize,
-        tick: usize,
-        first: bool,
-        self_damage_modifiers: &mut DamageModifiers,
-        rival_damage_modifiers: &mut DamageModifiers,
+        _tick: usize,
+        _first: bool,
+        _self_damage_modifiers: &mut DamageModifiers,
+        _rival_damage_modifiers: &mut DamageModifiers,
     ) -> usize {
         damage
     }

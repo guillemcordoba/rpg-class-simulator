@@ -1,64 +1,28 @@
-use crate::player::DamageModifiers;
-use std::fmt::Debug;
+use crate::skill::{AttackSkill, DefenseSkill};
 
-pub trait Class: Debug {
+pub trait Class {
     fn name(&self) -> String;
 
     fn initial_health(&self) -> usize {
         30
     }
-    fn min_roll(&self) -> usize;
-    fn attack_bonus(&self) -> isize;
-    fn defense_bonus(&self) -> isize {
-        0
-    }
 
-    fn attack_modifier(
+    fn choose_attack_skill(
         &self,
-        damage: usize,
-        _self_damage_modifiers: &mut DamageModifiers,
-        _rival_damage_modifiers: &mut DamageModifiers,
-    ) -> usize {
-        damage
+        _self_health: usize,
+        _rival_health: usize,
+    ) -> Box<dyn AttackSkill> {
+        self.basic_attack_skill()
     }
-    fn defend_modifier(
+
+    fn choose_defense_skill(
         &self,
-        damage: usize,
-        _self_damage_modifiers: &mut DamageModifiers,
-        _rival_damage_modifiers: &mut DamageModifiers,
-    ) -> usize {
-        damage
-    }
-}
-
-#[derive(Debug)]
-pub struct Rogue;
-
-impl Class for Rogue {
-    fn name(&self) -> String {
-        String::from("Rogue")
+        _self_health: usize,
+        _rival_health: usize,
+    ) -> Box<dyn DefenseSkill> {
+        self.basic_defense_skill()
     }
 
-    fn min_roll(&self) -> usize {
-        3
-    }
-    fn attack_bonus(&self) -> isize {
-        0
-    }
-}
-
-#[derive(Debug)]
-pub struct Knight;
-
-impl Class for Knight {
-    fn name(&self) -> String {
-        String::from("Knight")
-    }
-
-    fn min_roll(&self) -> usize {
-        8
-    }
-    fn attack_bonus(&self) -> isize {
-        8
-    }
+    fn basic_attack_skill(&self) -> Box<dyn AttackSkill>;
+    fn basic_defense_skill(&self) -> Box<dyn DefenseSkill>;
 }

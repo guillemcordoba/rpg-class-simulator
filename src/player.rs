@@ -1,7 +1,4 @@
-use crate::{
-    class::{Class, Rogue},
-    fight::Fight,
-};
+use crate::class::Class;
 use roll_dice::roll;
 use std::collections::HashMap;
 
@@ -14,24 +11,41 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn attack(&mut self, rival: &mut Player, tick: usize) -> () {
-        let min_roll = self.class.min_roll();
+    pub fn attack(&mut self, rival: &mut Player, tick: usize, first: bool) -> () {
+        let attacking_skill = self.class.choose_attack_skill(self.health, rival.health);
+        let defending_skill = rival.class.choose_defense_skill(rival.health, self.health);
 
-        let roll = roll_dices();
+        let min_roll = attacking_skill.min_roll();
 
-        if roll >= min_roll {
-            let damage = (roll as isize - min_roll as isize) + self.class.attack_bonus()
-                - rival.class.defense_bonus();
+        let mut roll: isize = roll_dices() as isize;
 
-            let atk_damage = self.class.attack_modifier(
+        roll += defending_skill.defense_roll_bonus();
+
+        if roll < 0 {
+            roll = 0;
+        }
+
+        if roll as usize >= min_roll {
+            let mut damage = (roll as isize - min_roll as isize) + attacking_skill.attack_bonus()
+                - defending_skill.defense_bonus();
+
+            if damage < 0 {
+                damage = 0;
+            }
+
+            let atk_damage = attacking_skill.attack(
                 damage as usize,
+                tick,
+                first,
                 &mut self.damage_modifiers,
                 &mut rival.damage_modifiers,
             );
-            let mut final_damage = rival.class.defend_modifier(
+            let mut final_damage = defending_skill.defend(
                 atk_damage,
-                &mut rival.damage_modifiers,
+                tick,
+                !first,
                 &mut self.damage_modifiers,
+                &mut rival.damage_modifiers,
             );
 
             if self.damage_modifiers.contains_key(&tick) {

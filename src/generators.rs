@@ -1,5 +1,6 @@
 use crate::{
-    class::{Class, Knight, Rogue},
+    class::Class,
+    classes::{gangster::Gangster, hammer::HammerGuy, knight::HeavyKnight, rogue::Rogue},
     matchup::Matchup,
 };
 
@@ -27,6 +28,8 @@ pub fn generate_matchups(
 pub fn classes_generators() -> Vec<ClassGenerator> {
     vec![
         Box::new(|| (Box::new(Rogue) as Box<dyn Class>)),
-        Box::new(|| (Box::new(Knight) as Box<dyn Class>)),
+        Box::new(|| (Box::new(HammerGuy) as Box<dyn Class>)),
+        Box::new(|| (Box::new(HeavyKnight) as Box<dyn Class>)),
+        Box::new(|| (Box::new(Gangster) as Box<dyn Class>)),
     ]
 }

@@ -6,6 +6,8 @@ mod generators;
 mod matchup;
 mod player;
 mod utils;
+mod classes;
+mod skill;
 
 fn main() {
     let classes_generators = generators::classes_generators();

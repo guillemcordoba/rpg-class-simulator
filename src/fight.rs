@@ -1,4 +1,4 @@
-use crate::{class::Class, player::Player};
+use crate::player::Player;
 use roll_dice::roll;
 
 pub struct Fight {
@@ -35,10 +35,10 @@ impl Fight {
     }
 
     pub fn tick(&mut self) -> () {
-        self.first.attack(&mut self.second, self.tick);
+        self.first.attack(&mut self.second, self.tick, true);
 
         if let None = self.winner() {
-            self.second.attack(&mut self.first, self.tick);
+            self.second.attack(&mut self.first, self.tick, false);
         }
 
         self.tick += 1;
